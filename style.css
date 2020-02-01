@@ -1,0 +1,55 @@
+body {
+    display: flex;
+    flex-direction: column;
+}
+
+.middleOfPage {
+display: flex;
+}
+
+.elementsPlacement {
+    margin-left: 5%;
+    width: 80vw;
+    height: 80vh;
+    border: 1px solid black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* ELEMENT STYLING */
+.hydrogenElement {
+    position: absolute;
+    background-color: yellow;
+    border-radius: 50%;
+    height: 40px;
+    width: 30px;
+    border: 1px solid black;
+}
+
+.oxygenElement {
+    position: absolute;
+    background-color: blue;
+    border-radius: 50%;
+    height: 40px;
+    width: 30px;
+    border: 1px solid black;
+}
+
+.nitrogenElement {
+    position: absolute;
+    background-color: red;
+    border-radius: 50%;
+    height: 40px;
+    width: 30px;
+    border: 1px solid black;
+}
+
+.carbonElement {
+    position: absolute;
+    background-color: grey;
+    border-radius: 50%;
+    height: 40px;
+    width: 30px;
+    border: 1px solid black;
+}
