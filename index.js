@@ -1,9 +1,5 @@
 // elements
-let hydrogens = []
-let oxygens = []
-let nitrogens = []
-let carbons = []
-let myArray = []
+let elementsArray = []
 let iteratorNum = 0
 
 // handling the buttons that create each element
@@ -13,7 +9,7 @@ let creationButtons = document.querySelector('.makingButtons').addEventListener(
         hydrogenDiv.className = 'hydrogenElement '
         hydrogenDiv.id = `${iteratorNum}`
         document.querySelector('.elementsPlacement').appendChild(hydrogenDiv)
-        hydrogens.push({
+        elementsArray.push({
             id: `${iteratorNum}`,
             bonds: 0,
             bondsLimit: 1,
@@ -26,7 +22,7 @@ let creationButtons = document.querySelector('.makingButtons').addEventListener(
         oxygenDiv.className = 'oxygenElement ' 
         oxygenDiv.id = `${iteratorNum}`
         document.querySelector('.elementsPlacement').appendChild(oxygenDiv)
-        oxygens.push({
+        elementsArray.push({
             id: `${iteratorNum}`,
             bonds: 0,
             bondsLimit: 2,
@@ -39,7 +35,7 @@ let creationButtons = document.querySelector('.makingButtons').addEventListener(
         nitrogenDiv.className = 'nitrogenElement ' 
         nitrogenDiv.id = `${iteratorNum}`
         document.querySelector('.elementsPlacement').appendChild(nitrogenDiv)
-        nitrogens.push({
+        elementsArray.push({
             id: `${iteratorNum}`,
             bonds: 0,
             bondsLimit: 3,
@@ -52,7 +48,7 @@ let creationButtons = document.querySelector('.makingButtons').addEventListener(
         carbonDiv.className = 'carbonElement '
         carbonDiv.id =  `${iteratorNum}`
         document.querySelector('.elementsPlacement').appendChild(carbonDiv)
-        carbons.push({
+        elementsArray.push({
             id: `${iteratorNum}`,
             bonds: 0,
             bondsLimit: 4,
@@ -88,7 +84,20 @@ document.addEventListener('mousedown', (ev) => {
        
     // clears the interval so element stops moving, and sets the target to '' so next element can be selected
     document.addEventListener('mouseup', (e) => {
-        elementName = ''
+        elementsArray.forEach((ele, index) => {
+            if (ele.id === elementName) {
+                ele.currentX = currX
+                ele.currentY = currY 
+            }
+            if (ele.id !== elementName) {
+                if ((Math.abs(ele.currentX-currX)) < 100 && (Math.abs(ele.currentY-currY)) < 100) {
+                    console.log('collision', elementName)
+                    drawLine(elementName, ele.id)
+                }
+            }
+        })
+        console.log(elementsArray)
+        // elementName = ''
         clearInterval(moveTheTarget)
     })
 })
@@ -105,11 +114,20 @@ let drawLine = (atom1, atom2) => {
     let x2 = document.getElementById(`${atom2}`).getBoundingClientRect().right + 15
     let y2 = document.getElementById(`${atom2}`).getBoundingClientRect().top + 20
 
+    console.log('x1: ', x1)
+    console.log('x2: ', x2)
+    console.log('y1: ', y1)
+    console.log('y2: ', y2)
+
     // solve for distance between the two center points for the divs
     let lineLength = Math.sqrt(((x2-x1)**2)+((y2-y1)**2))
 
     // solve the angle between the two center points to transform the line to
     let lineAngle = Math.atan2(((y2-y1)/(x2-x1)))*(180/Math.PI)
+
+    let lineDiv = document.createElement('div')
+    lineDiv.className = 'lineDivClass'
+    lineDiv.clientWidth = lineLength
 }
 
 
