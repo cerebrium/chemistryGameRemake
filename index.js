@@ -72,34 +72,36 @@ let currY = 0
 // making the elements able to move
 document.addEventListener('mousedown', (ev) => {
     elementName = ev.target.id
-    document.addEventListener('mousemove', (ev) => {
-        currX = ev.clientX
-        currY = ev.clientY
-    })
-    // interval that sets the current elements coordinates equal to the mouse coordinates every 100 miliseconds
-    let moveTheTarget = setInterval(() => {
-        document.getElementById(`${elementName}`).style.left = currX + 'px'
-        document.getElementById(`${elementName}`).style.top = currY + 'px'
-    }, 100)   
-       
-    // clears the interval so element stops moving, and sets the target to '' so next element can be selected
-    document.addEventListener('mouseup', (e) => {
-        elementsArray.forEach((ele, index) => {
-            if (ele.id === elementName) {
-                ele.currentX = currX
-                ele.currentY = currY 
-            }
-            if (ele.id !== elementName) {
-                if ((Math.abs(ele.currentX-currX)) < 100 && (Math.abs(ele.currentY-currY)) < 100) {
-                    console.log('collision', elementName)
-                    drawLine(elementName, ele.id)
-                }
-            }
+    if (elementName) {
+        document.addEventListener('mousemove', (ev) => {
+            currX = ev.clientX
+            currY = ev.clientY
         })
-        console.log(elementsArray)
-        // elementName = ''
-        clearInterval(moveTheTarget)
-    })
+        // interval that sets the current elements coordinates equal to the mouse coordinates every 100 miliseconds
+        let moveTheTarget = setInterval(() => {
+            document.getElementById(`${elementName}`).style.left = currX + 'px'
+            document.getElementById(`${elementName}`).style.top = currY + 'px'
+        }, 100)   
+           
+        // clears the interval so element stops moving, and sets the target to '' so next element can be selected
+        document.addEventListener('mouseup', (e) => {
+            elementsArray.forEach((ele, index) => {
+                if (ele.id === elementName) {
+                    ele.currentX = currX
+                    ele.currentY = currY 
+                }
+                if (ele.id !== elementName) {
+                    if ((Math.abs(ele.currentX-currX)) < 100 && (Math.abs(ele.currentY-currY)) < 100) {
+                        console.log('collision', elementName)
+                        drawLine(elementName, ele.id)
+                    }
+                }
+            })
+            console.log(elementsArray)
+            // elementName = ''
+            clearInterval(moveTheTarget)
+        })
+    }
 })
 
 // END OF MOVEMENT SECTION
@@ -123,11 +125,18 @@ let drawLine = (atom1, atom2) => {
     let lineLength = Math.sqrt(((x2-x1)**2)+((y2-y1)**2))
 
     // solve the angle between the two center points to transform the line to
-    let lineAngle = Math.atan2(((y2-y1)/(x2-x1)))*(180/Math.PI)
+    let lineAngle = Math.atan2((y2-y1), (x2-x1))*(180/Math.PI)
 
     let lineDiv = document.createElement('div')
     lineDiv.className = 'lineDivClass'
-    lineDiv.clientWidth = lineLength
+    lineDiv.id = `${x1}${x2}`
+    document.querySelector('.elementsPlacement').appendChild(lineDiv)
+    document.getElementById(`${x1}${x2}`).style.width = `${lineLength}px`
+    document.getElementById(`${x1}${x2}`).style.transform = `rotate(${lineAngle}deg)`
+    console.log('rotation is: ', lineAngle)
+    // introducing cases for placement of the lines
+        document.getElementById(`${x1}${x2}`).style.left = (x2-40) + 'px'
+        document.getElementById(`${x1}${x2}`).style.top = (y2-40) + 'px'
 }
 
 
