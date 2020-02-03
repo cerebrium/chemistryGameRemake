@@ -91,7 +91,7 @@ document.addEventListener('mousedown', (ev) => {
                     ele.currentY = currY 
                 }
                 if (ele.id !== elementName) {
-                    if ((Math.abs(ele.currentX-currX)) < 100 && (Math.abs(ele.currentY-currY)) < 100) {
+                    if ((Math.abs(ele.currentX-currX)) < 70 && (Math.abs(ele.currentY-currY)) < 70) {
                         console.log('collision', elementName)
                         drawLine(elementName, ele.id)
                     }
@@ -135,8 +135,27 @@ let drawLine = (atom1, atom2) => {
     document.getElementById(`${x1}${x2}`).style.transform = `rotate(${lineAngle}deg)`
     console.log('rotation is: ', lineAngle)
     // introducing cases for placement of the lines
-        document.getElementById(`${x1}${x2}`).style.left = (x2-40) + 'px'
-        document.getElementById(`${x1}${x2}`).style.top = (y2-40) + 'px'
+    if (x2 > x1 && y2 > y1) {
+        console.log('case 1')
+        // down a little to left lot
+        document.getElementById(`${x1}${x2}`).style.left = (x1-50) + 'px'
+        document.getElementById(`${x1}${x2}`).style.top = (y1+16) + 'px'
+    } else if (x1 > x2 && y2 > y1) {
+        console.log('case 2')
+        // down, left a little
+        document.getElementById(`${x1}${x2}`).style.left = (x1-80) + 'px'
+        document.getElementById(`${x1}${x2}`).style.top = (y1+15) + 'px'
+    } else if (x1 > x2 && y1 > y2) {
+        console.log('case 3')
+        // up a little and to right little
+        document.getElementById(`${x1}${x2}`).style.left = (x1-85) + 'px'
+        document.getElementById(`${x1}${x2}`).style.top = (y1-15) + 'px'
+    } else if (x2 > x1 && y1 > y2) {
+        // down a little
+        document.getElementById(`${x1}${x2}`).style.left = (x1-50) + 'px'
+        document.getElementById(`${x1}${x2}`).style.top = (y1-20) + 'px'
+        console.log('case 4')
+    }
 }
 
 
