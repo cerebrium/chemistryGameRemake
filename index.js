@@ -92,13 +92,18 @@ document.addEventListener('mousedown', (ev) => {
                 }
                 if (ele.id !== elementName) {
                     if ((Math.abs(ele.currentX-currX)) < 70 && (Math.abs(ele.currentY-currY)) < 70) {
-                        console.log('collision', elementName)
-                        drawLine(elementName, ele.id)
+                        if (ele.bonds < ele.bondsLimit) {
+                            drawLine(elementName, ele.id)
+                            ele.bonds
+                            elementsArray.forEach((ele, index) => {
+                                if (ele.id === elementName) {
+                                    ele.bonds
+                                }
+                            })
+                        }
                     }
                 }
             })
-            console.log(elementsArray)
-            // elementName = ''
             clearInterval(moveTheTarget)
         })
     }
